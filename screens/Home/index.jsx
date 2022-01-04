@@ -1,8 +1,10 @@
 import React from 'react'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import Home from './DefaultHome';
+import {
+  useSelector,
+} from 'react-redux'
+import HomeDefault from './HomeDefault';
 import Profile from '../Profile';
-import Search from '../Search';
 import Cart from '../Cart';
 import Chat from '../Favorites';
 import {
@@ -17,6 +19,7 @@ import MediumText from '../../components/texts/MediumText';
 
 const HomeScreen = ({ navigation }) => {
   const Tab = createBottomTabNavigator();
+  const cart = useSelector(state => state.cart.value)
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
@@ -67,7 +70,31 @@ const HomeScreen = ({ navigation }) => {
                       {
                         route.name === 'Cart'
                         && (
-                          <Image style={styles.iconStyleFocused} resizeMode="contain" source={require('../../assets/icons/cart.png')} />
+                          <View style={{
+                            position: 'relative'
+                          }}>
+                            <View style={{
+                              position: 'absolute',
+                              flex: 1,
+                              justifyContent: 'center',
+                              alignItems: 'center',
+                              right: -0,
+                              top: -4,
+                              backgroundColor: 'red',
+                              width: 20,
+                              height: 20,
+                              borderRadius: 30,
+                            }}>
+                              <Text style={{
+                                color: 'white',
+                              }}>
+                                {cart.length}
+                              </Text>
+                            </View>
+                            <View>
+                              <Image style={styles.iconStyleFocused} resizeMode="contain" source={require('../../assets/icons/cart.png')} />
+                            </View>
+                          </View>
                         )
                       }
                       {
@@ -96,8 +123,31 @@ const HomeScreen = ({ navigation }) => {
                       {
                         route.name === 'Cart'
                         && (
-                          <Image style={styles.iconStyle} resizeMode="contain" source={require('../../assets/icons/cart.png')} />
-                        )
+                          <View style={{
+                            position: 'relative'
+                          }}>
+                            <View style={{
+                              position: 'absolute',
+                              flex: 1,
+                              justifyContent: 'center',
+                              alignItems: 'center',
+                              right: -0,
+                              top: -4,
+                              backgroundColor: 'red',
+                              width: 20,
+                              height: 20,
+                              borderRadius: 30,
+                            }}>
+                              <Text style={{
+                                color: 'white',
+                              }}>
+                                {cart.length}
+                              </Text>
+                            </View>
+                            <View>
+                              <Image style={styles.iconStyleFocused} resizeMode="contain" source={require('../../assets/icons/cart.png')} />
+                            </View>
+                          </View>)
                       }
                       {
                         route.name === 'Chat'
@@ -113,13 +163,9 @@ const HomeScreen = ({ navigation }) => {
         })
       })}
     >
-      <Tab.Screen name="Home" component={Home} />
+      <Tab.Screen name="Home" component={HomeDefault} />
       <Tab.Screen name="Profile" component={Profile} />
-      <Tab.Screen
-        options={{
-          tabBarBadge: 3,
-        }}
-        name="Cart" component={Cart} />
+      <Tab.Screen name="Cart" component={Cart} />
       <Tab.Screen name="Chat" component={Chat} />
     </Tab.Navigator>
   )
